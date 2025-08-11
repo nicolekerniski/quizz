@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Disney - Qual filme combina com você?</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #ffb6c1, #ffc0cb);
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background-color: rgba(255, 105, 180, 0.85);
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  header img {
+    max-width: 150px;
+    margin-bottom: 10px;
+  }
+  main {
+    max-width: 800px;
+    margin: 2rem auto;
+    background-color: rgba(255,255,255,0.9);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .question {
+    margin-bottom: 2rem;
+  }
+  .question img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  button {
+    background-color: #ff69b4;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #ff1493;
+  }
+  #result {
+    margin-top: 2rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Disney_wordmark.svg" alt="Disney Logo">
+    <h1>Qual filme da Disney combina com você?</h1>
+  </header>
+  <main>
+    <form id="quizForm">
+      <div class="question">
+        <p>1. Qual é a sua cor favorita?</p>
+        <img src="https://i.imgur.com/6XHqFqO.jpg" alt="Cores">
+        <label><input type="radio" name="q1" value="Frozen"> Azul</label><br>
+        <label><input type="radio" name="q1" value="Moana"> Verde</label><br>
+        <label><input type="radio" name="q1" value="A Bela e a Fera"> Amarelo</label>
+      </div>
+
+      <div class="question">
+        <p>2. Qual ambiente você prefere?</p>
+        <img src="https://i.imgur.com/Q3K2jE6.jpg" alt="Ambientes">
+        <label><input type="radio" name="q2" value="Moana"> Praia</label><br>
+        <label><input type="radio" name="q2" value="Frozen"> Neve</label><br>
+        <label><input type="radio" name="q2" value="O Rei Leão"> Savana</label>
+      </div>
+
+      <div class="question">
+        <p>3. Qual qualidade você mais valoriza?</p>
+        <img src="https://i.imgur.com/Eb9z2kB.jpg" alt="Qualidades">
+        <label><input type="radio" name="q3" value="A Bela e a Fera"> Bondade</label><br>
+        <label><input type="radio" name="q3" value="O Rei Leão"> Coragem</label><br>
+        <label><input type="radio" name="q3" value="Frozen"> Amizade</label>
+      </div>
+
+      <div class="question">
+        <p>4. O que você gosta de fazer no tempo livre?</p>
+        <img src="https://i.imgur.com/pqB8Z4J.jpg" alt="Hobbies">
+        <label><input type="radio" name="q4" value="Moana"> Aventuras ao ar livre</label><br>
+        <label><input type="radio" name="q4" value="A Bela e a Fera"> Ler</label><br>
+        <label><input type="radio" name="q4" value="Frozen"> Brincar com amigos</label>
+      </div>
+
+      <div class="question">
+        <p>5. Escolha um animal que você gostaria de ter como amigo:</p>
+        <img src="https://i.imgur.com/Wg1D5io.jpg" alt="Animais">
+        <label><input type="radio" name="q5" value="O Rei Leão"> Leão</label><br>
+        <label><input type="radio" name="q5" value="Moana"> Porquinho</label><br>
+        <label><input type="radio" name="q5" value="Frozen"> Rena</label>
+      </div>
+
+      <div style="text-align:center;">
+        <button type="button" onclick="calculateResult()">Ver Resultado</button>
+      </div>
+    </form>
+    <div id="result"></div>
+  </main>
+  <script>
+    function calculateResult() {
+      const answers = document.querySelectorAll('input[type=radio]:checked');
+      if (answers.length < 5) {
+        document.getElementById('result').innerText = 'Por favor, responda todas as perguntas!';
+        return;
+      }
+      let tally = {};
+      answers.forEach(a => {
+        tally[a.value] = (tally[a.value] || 0) + 1;
+      });
+      let result = Object.keys(tally).reduce((a, b) => tally[a] > tally[b] ? a : b);
+      document.getElementById('result').innerText = `O filme da Disney que mais combina com você é: ${result}!`;
+    }
+  </script>
+</body>
+</html>
