@@ -1,0 +1,146 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Disney - Qual Filme Combina com Você?</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #ffc0cb;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+    .quiz-container {
+        max-width: 700px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+    }
+    h1 {
+        color: #d63384;
+    }
+    .question {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+    }
+    .options button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 10px;
+        font-size: 1em;
+        background: #ff69b4;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .options button:hover {
+        background: #d63384;
+    }
+    img {
+        max-width: 100%;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+    .result {
+        display: none;
+    }
+</style>
+</head>
+<body>
+<div class="quiz-container">
+    <h1>Qual Filme da Disney Combina com Você?</h1>
+    <div id="quiz"></div>
+    <div class="result" id="result"></div>
+</div>
+<script>
+const questions = [
+    {
+        image: "https://upload.wikimedia.org/wikipedia/en/3/3d/Moana_Teaser_Poster.jpg",
+        question: "Você prefere mar ou terra?",
+        options: ["Mar", "Terra"]
+    },
+    {
+        image: "https://upload.wikimedia.org/wikipedia/en/0/05/Frozen_%282013_film%29_poster.jpg",
+        question: "Você gosta mais de frio ou calor?",
+        options: ["Frio", "Calor"]
+    },
+    {
+        image: "https://upload.wikimedia.org/wikipedia/en/7/73/The_Lion_King_poster.jpg",
+        question: "Prefere aventura ou tranquilidade?",
+        options: ["Aventura", "Tranquilidade"]
+    },
+    {
+        image: "https://upload.wikimedia.org/wikipedia/en/2/2d/Aladdin2019poster.jpg",
+        question: "Você acredita em magia?",
+        options: ["Sim", "Não"]
+    },
+    {
+        image: "https://upload.wikimedia.org/wikipedia/en/4/4d/Tangled_poster.jpg",
+        question: "Prefere viajar ou ficar em casa?",
+        options: ["Viajar", "Ficar em casa"]
+    }
+];
+
+let currentQuestion = 0;
+let score = {Moana: 0, Frozen: 0, ReiLeao: 0, Aladdin: 0, Enrolados: 0};
+
+function showQuestion() {
+    if (currentQuestion >= questions.length) {
+        showResult();
+        return;
+    }
+    const q = questions[currentQuestion];
+    document.getElementById("quiz").innerHTML = `
+        <img src="${q.image}" alt="Imagem da pergunta">
+        <div class="question">${q.question}</div>
+        <div class="options">
+            ${q.options.map((opt, i) => `<button onclick="selectOption(${i})">${opt}</button>`).join('')}
+        </div>
+    `;
+}
+
+function selectOption(index) {
+    const movieKeys = Object.keys(score);
+    score[movieKeys[(currentQuestion + index) % movieKeys.length]]++;
+    currentQuestion++;
+    showQuestion();
+}
+
+function showResult() {
+    let bestMovie = Object.keys(score).reduce((a, b) => score[a] > score[b] ? a : b);
+    const movieNames = {
+        Moana: "Moana",
+        Frozen: "Frozen",
+        ReiLeao: "O Rei Leão",
+        Aladdin: "Aladdin",
+        Enrolados: "Enrolados"
+    };
+    const movieImages = {
+        Moana: "https://upload.wikimedia.org/wikipedia/en/3/3d/Moana_Teaser_Poster.jpg",
+        Frozen: "https://upload.wikimedia.org/wikipedia/en/0/05/Frozen_%282013_film%29_poster.jpg",
+        ReiLeao: "https://upload.wikimedia.org/wikipedia/en/7/73/The_Lion_King_poster.jpg",
+        Aladdin: "https://upload.wikimedia.org/wikipedia/en/2/2d/Aladdin2019poster.jpg",
+        Enrolados: "https://upload.wikimedia.org/wikipedia/en/4/4d/Tangled_poster.jpg"
+    };
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").innerHTML = `
+        <h2>Seu filme é: ${movieNames[bestMovie]}!</h2>
+        <img src="${movieImages[bestMovie]}" alt="Poster do filme">
+        <p>Parabéns! Esse é o filme que mais combina com a sua personalidade.</p>
+    `;
+}
+
+showQuestion();
+</script>
+</body>
+</html>
+```
